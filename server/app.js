@@ -21,17 +21,14 @@ app.use(express.json());
 const con = mysql.createConnection({
 
 host: "localhost",
-
 user: "root",
-
 password: "",
-
 database: "lama_shop",
 });
 
 app.listen(port, () => {
 
-console.log(`Bebras klauso porto Nr ${port}`);
+console.log(`Alo - alo, Baločka Jonas klauso - ${port}`);
 });
 
 
@@ -42,4 +39,19 @@ console.log(`Bebras klauso porto Nr ${port}`);
 
 
 //////////////////////////////////////////////
-///////////////  BACK SHOP  /////////////////
+///////////////  BACK SHOP  //////////////////
+
+
+// CREATE CAT //
+app.post("/admin/cats", (req, res) => {
+    const sql = `
+    INSERT INTO cats
+    (title)
+    VALUES (?)
+  `;
+
+  con.query(sql, [req.body.title], (err, result) => {
+    if (err) throw err;   
+    res.send({result, msg: {text: 'New cat created', type: 'success'}});
+  });
+});
