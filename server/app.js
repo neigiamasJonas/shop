@@ -26,10 +26,20 @@ user: "root",
 
 password: "",
 
-database: "ISIRASHOM DATABASE",
+database: "lama_shop",
 });
 
 app.listen(port, () => {
 
 console.log(`Bebras klauso porto Nr ${port}`);
 });
+
+
+//////////////////////////////////////////////
+///////////////  FRONT SHOP  /////////////////
+
+
+
+
+//////////////////////////////////////////////
+///////////////  BACK SHOP  /////////////////

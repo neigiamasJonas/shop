@@ -1,13 +1,22 @@
+import './App.scss';
+import './bootsrap.css';
+import { BrowserRouter, Routes, Route, } from "react-router-dom"; 
+import Back from "./Components/Back/Back";
+import Front from "./Components/Front/Front";
 
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Header</h1>
-      </header>
-    </div>
+    
+      <BrowserRouter>
+  
+          <Routes>
+              <Route path="/" element={<Front></Front>}></Route>
+              <Route path="/admin" element={<Back></Back>}></Route>
+          </Routes>
+          
+      </BrowserRouter>
+  
   );
 }
 
