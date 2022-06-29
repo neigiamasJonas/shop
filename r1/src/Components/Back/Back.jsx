@@ -10,6 +10,7 @@ function Back( {show}) {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [createCat, setCreateCat] = useState(null);
+    const [cats, setCats] = useState(null)
 
     const showMessage = () => {
 
@@ -31,11 +32,25 @@ function Back( {show}) {
 
     }, [createCat]);
 
+    // READ CAT //
+    useEffect(() => {
+        axios.get('http://localhost:3006/admin/cats')
+        .then(res => {
+            setCats(res.data)
+            setLastUpdate(Date.now());
+        })
+        .catch(error => {
+            showMessage({ text: error.message, type: 'danger' });
+        })
+
+    }, [lastUpdate]);
+
 
     return (
         <BackContext.Provider value={
             {
-                setCreateCat
+                setCreateCat,
+                cats
             }
             }>
             {

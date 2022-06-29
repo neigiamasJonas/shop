@@ -41,7 +41,6 @@ console.log(`Alo - alo, Baločka Jonas klauso - ${port}`);
 //////////////////////////////////////////////
 ///////////////  BACK SHOP  //////////////////
 
-
 // CREATE CAT //
 app.post("/admin/cats", (req, res) => {
     const sql = `
@@ -55,3 +54,18 @@ app.post("/admin/cats", (req, res) => {
     res.send({result, msg: {text: 'New cat created', type: 'success'}});
   });
 });
+
+
+// GET CAT //
+app.get("/admin/cats", (req, res) => {
+    const sql = `
+    SELECT *
+    FROM cats
+    ORDER BY title
+
+  `;
+    con.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  });

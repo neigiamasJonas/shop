@@ -2,3 +2,114 @@ nav.nav {
     background-color: aliceblue;
     
 }
+
+body {
+    font-family: Roboto Slab;
+}
+
+.list-group-item {
+    .item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .nest-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            li {
+                min-width: 100px;
+                background-color: aliceblue;
+                color: black;
+            }
+        }
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    b {
+        margin-right: 7px;
+    }
+    i {
+        margin-left: 7px;
+    }
+    }
+}
+
+textarea {
+    width: 100%;
+}
+.form-group {
+    width: 100%;
+}
+.list-group-item {
+    .item-front {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .nest-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            li {
+                min-width: 100px;
+                background-color: aliceblue;
+                color: black;
+            }
+        }
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    b {
+        margin-right: 7px;
+    }
+    i {
+        margin-left: 7px;
+    }
+    }
+}
+
+.modal {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.show_message {
+    display: flex;
+    position: fixed;
+    top: 50px;
+    width: 100px;
+    justify-content: flex-end;
+    background-color: red;
+}
+
+button.with-loader {
+    .spinner-border {
+        display: none;
+    }
+}
+
+button.with-loader:disabled {
+    .spinner-border {
+        display: inline-block;
+    }
+}
