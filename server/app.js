@@ -1,7 +1,6 @@
-
-const express = require("express");
-const app = express();
-const port = 3006;
+const express = require("express"); 
+const app = express(); 
+const port = 3006; 
 const cors = require("cors");
 
 app.use(cors());
@@ -10,35 +9,27 @@ const mysql = require("mysql");
 
 app.use(
 
-    express.urlencoded({
+express.urlencoded({
 
-        extended: true,
+    extended: true,
 
-    })
-
+})
 );
 
 app.use(express.json());
 
-
-
-
 const con = mysql.createConnection({
 
-    host: "localhost",
+host: "localhost",
 
-    user: "root",
+user: "root",
 
-    password: "",
+password: "",
 
-    database: "ISIRASHOM DATABASE",
-
+database: "ISIRASHOM DATABASE",
 });
-
-
 
 app.listen(port, () => {
 
-    console.log(`Bebras klauso porto Nr ${port}`);
-
+console.log(`Bebras klauso porto Nr ${port}`);
 });
