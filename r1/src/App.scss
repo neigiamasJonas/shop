@@ -95,11 +95,27 @@ textarea {
 
 .show_message {
     display: flex;
-    position: fixed;
-    top: 50px;
-    width: 100px;
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    width: 100%;
     justify-content: flex-end;
-    background-color: red;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 3;
+    .alert-danger {
+        background-color: #f8d7dac2;
+    }
+    .alert-info {
+        background-color: #d1ecf1c2;
+    }
+    .alert-success {
+        background-color: #d4eddac2;
+    }
+    div {
+        width: 50%;
+        margin-right: 30px;
+    }
 }
 
 button.with-loader {

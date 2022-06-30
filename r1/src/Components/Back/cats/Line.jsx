@@ -1,18 +1,16 @@
-import { useContext } from "react";
-import BackContext from "../BackContext";
-
+import { useContext } from 'react';
+import BackContext from '../BackContext';
 
 function Line({ line }) {
 
+    const { setDeleteCat, setModalCat } = useContext(BackContext);
 
-    const { a } = useContext(BackContext)
-
-    const handleDelete = () => {                        
-        // setDeleteData(line);
+    const handleDelete = () => {
+        setDeleteCat(line);
     }
 
     const handleEdit = () => {
-        // setModalData(line);
+        setModalCat(line);
     }
 
     return (
