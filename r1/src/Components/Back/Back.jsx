@@ -24,6 +24,9 @@ function Back( {show}) {
     const [editProduct, setEditProduct] = useState(null);
     const [modalProduct, setModalProduct] = useState(null);
 
+    // Photo //
+    const [deletePhoto, setDeletePhoto] = useState(null);
+
 
     // MSG //
     const [messages, setMessages] = useState([]);
@@ -111,6 +114,21 @@ function Back( {show}) {
             })
     }, [deleteProduct]);
 
+    // delete photo //
+    useEffect(() => {
+        if (null === deletePhoto) return;
+
+        axios.delete('http://localhost:3006/admin/photos/' + deletePhoto.id)
+        .then(res => {
+            showMessage(res.data.msg);
+            // setLastUpdate(Date.now());
+        })
+        .catch(error => {
+            showMessage({ text: error.message, type: 'danger' });
+        })
+
+    }, [deletePhoto]);
+
 
     // EDIT CAT + PRODUCTS //
     useEffect(() => {
@@ -155,6 +173,7 @@ function Back( {show}) {
                 setEditProduct,
                 setModalProduct,
                 modalProduct,
+                setDeletePhoto
             }
             }>
             {

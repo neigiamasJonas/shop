@@ -42,7 +42,8 @@ function Create() {
         setPrice('');
         setInStock(false);
         setCat('0');
-        // photoPrint(null);
+        setPhotoPrint(null);
+        fileInput.current.value = null;
     }
 
 

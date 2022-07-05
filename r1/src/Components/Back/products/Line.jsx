@@ -22,6 +22,11 @@ function Line({ line }) {
                     <div className="box" style={{backgroundColor: line.in_stock ? 'coral' : null}}></div>
                     <span>{new Date(Date.parse(line.lu)).toLocaleString()}</span>
                     <div className="cat">{line.cat}</div>
+                    <div>
+                        {
+                            line.photo ? <div className='photo-bin'><img src={line.photo} alt='chosen img'></img></div> : null
+                        }
+                    </div>
                 </div>
                 <div className="buttons">
                     <button type="button" className="btn btn-outline-success ml-2" onClick={handleEdit}>Edit</button>

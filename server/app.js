@@ -115,7 +115,7 @@ app.post("/admin/products", (req, res) => {
 // GET PRODUCTS //
 app.get("/admin/products", (req, res) => {
   const sql = `
-  SELECT p.id, price, p.title, c.title AS cat, in_stock, last_update AS lu
+  SELECT p.id, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
   FROM products AS p
   LEFT JOIN cats AS c
   ON c.id = p.cats_id
@@ -145,11 +145,25 @@ app.delete("/admin/products/:id", (req, res) => {
 app.put("/admin/products/:id", (req, res) => {
   const sql = `
   UPDATE products
-  SET title = ?, price = ?, last_update = ?, cats_id = ?, in_stock = ?
+  SET title = ?, price = ?, last_update = ?, cats_id = ?, in_stock = ?, photo = ?
   WHERE id = ?
   `;
-  con.query(sql, [req.body.title, req.body.price, req.body.lu, req.body.cat, req.body.in_stock, req.params.id], (err, result) => {
+  con.query(sql, [req.body.title, req.body.price, req.body.lu, req.body.cat, req.body.in_stock, req.body.photo, req.params.id], (err, result) => {
       if (err) throw err;
       res.send({ result, msg: { text: 'Product updated', type: 'success' } });
+  });
+});
+
+
+// delete/edit photo //
+app.delete("/admin/photos/:id", (req, res) => {
+  const sql = `
+  UPDATE products
+  SET photo = null
+  WHERE id = ?
+  `;
+  con.query(sql, [req.params.id], (err, result) => {
+      if (err) throw err;
+      res.send({ result, msg: { text: 'Photo removed', type: 'success' } });
   });
 });

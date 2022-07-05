@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import BackContext from "../BackContext";
+import getBase64 from '../../../Functions/base64'
 
 function Edit() {
 
-    const { modalProduct, setEditProduct, setModalProduct, cats } = useContext(BackContext);
+    const { modalProduct, setEditProduct, setModalProduct, cats, setDeletePhoto } = useContext(BackContext);
 
 
     const [title, setTitle] = useState('');
@@ -12,6 +13,26 @@ function Edit() {
     const [cat, setCat] = useState('0');
     const [lu, setLu] = useState('');
 
+    // photo //
+    const fileInput = useRef();
+    const [photoPrint, setPhotoPrint] = useState(null);
+
+    const doPhoto = () => {
+        getBase64(fileInput.current.files[0])
+        .then(photo => setPhotoPrint(photo))
+        .catch(_ => {
+            // tylim
+        })
+    }
+
+    const handleDeletePhoto = () => {
+        setDeletePhoto({id: modalProduct.id})
+        // setPhotoPrint(null);
+        setModalProduct(p => ({...p, photo: null}))
+    }
+
+
+    // date //
     const setDateFormat = d => {
         //yyyy-MM-ddThh:mm
         const date = new Date(Date.parse(d));
@@ -33,6 +54,7 @@ function Edit() {
         setLu(setDateFormat(modalProduct.lu));
         setInStock(modalProduct.in_stock ? true : false);
         setCat(cats.filter(c => c.title === modalProduct.cat)[0].id);
+        setPhotoPrint(modalProduct.photo)
     }, [modalProduct, cats]);
 
     const handleEdit = () => {
@@ -42,7 +64,8 @@ function Edit() {
             in_stock: inStock ? 1 : 0,
             price: parseFloat(price),
             cat: parseInt(cat),
-            lu: lu
+            lu: lu,
+            photo: photoPrint
         };
         setEditProduct(data);
         setModalProduct(null);
@@ -54,7 +77,7 @@ function Edit() {
 
     return (
         <div className="modal">
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Product Changer</h5>
@@ -92,10 +115,20 @@ function Edit() {
                             </select>
                             <small className="form-text text-muted">Select category here.</small>
                         </div>
-                    </div>
+                        <div className="form-group">
+                            <label>Photo</label>
+                            <br/>
+                            <input type="file" ref={fileInput} onChange={doPhoto}/>
+                            <small className="form-text text-muted">Upload photo</small>
+                        </div>
+                        {
+                            photoPrint ? <div className='photo-bin'><img src={photoPrint} alt='chosen img'></img></div> : null
+                        }
+                        </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-secondary" onClick={() => setModalProduct(null)}>Close</button>
                         <button type="button" className="btn btn-outline-primary" onClick={handleEdit}>Save changes</button>
+                        <button type="button" className="btn btn-outline-danger" onClick={handleDeletePhoto}>Remove photo</button>
                     </div>
                 </div>
             </div>
