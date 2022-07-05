@@ -148,6 +148,6 @@ app.put("/admin/products/:id", (req, res) => {
   `;
   con.query(sql, [req.body.title, req.body.price, req.body.lu, req.body.cat, req.body.in_stock, req.params.id], (err, result) => {
       if (err) throw err;
-      res.send({ result, msg: { text: 'OK, Cat updated. Now it is as new', type: 'success' } });
+      res.send({ result, msg: { text: 'Product updated', type: 'success' } });
   });
 });

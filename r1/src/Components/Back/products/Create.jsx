@@ -1,5 +1,7 @@
-import { useContext, useState } from 'react';
+
+import { useContext, useState, useRef } from 'react';
 import BackContext from '../BackContext';
+import getBase64 from '../../../Functions/base64'
 
 function Create() {
 
@@ -10,19 +12,50 @@ function Create() {
     const [inStock, setInStock] = useState(false);
     const [cat, setCat] = useState('0');
 
+    const fileInput = useRef();
+
     const handleCreate = () => {
         if (cat === '0') {
             showMessage({ text: 'Please, select cat!', type: 'danger' });
             return;
         }
 
-        const data = { title, price: parseFloat(price), inStock: inStock ? 1 : 0, cat: parseInt(cat) };
+        // photo dejimas //
+        const file = fileInput.current.files[0];        // file(useRef) .files[0] - bet kokio tekstinio inputo reiksmes gavimas. Senas budas
+
+        if (file) {
+            getBase64(file)
+                .then(photo => {
+                    console.log(photo);
+                    const data = {
+                            title, 
+                            price: parseFloat(price), 
+                            inStock: inStock ? 1 : 0, 
+                            cat: parseInt(cat) ,
+                            photo
+                        }
+                    setCreateProduct(data);
+                    setTitle('');
+                    setPrice('');
+                    setInStock(false);
+                    setCat('0');
+                    });
+        } else {
+            const data = {
+                title, 
+                price: parseFloat(price), 
+                inStock: inStock ? 1 : 0, 
+                cat: parseInt(cat) ,
+                photo: null
+            }
         setCreateProduct(data);
         setTitle('');
         setPrice('');
         setInStock(false);
         setCat('0');
+        }
     }
+
 
     return (
         <div className="card mt-4">
@@ -53,6 +86,11 @@ function Create() {
                         }
                     </select>
                     <small className="form-text text-muted">Select category here.</small>
+                </div>
+                <div className="form-group">
+                    <label>Photo</label>
+                    <input type="file" ref={fileInput}/>
+                    <small className="form-text text-muted">Upload photo</small>
                 </div>
                 <button type="button" className="btn btn-outline-primary" onClick={handleCreate}>Create</button>
             </div>
