@@ -12,48 +12,37 @@ function Create() {
     const [inStock, setInStock] = useState(false);
     const [cat, setCat] = useState('0');
 
+    // photo //
     const fileInput = useRef();
+    const [photoPrint, setPhotoPrint] = useState(null);
+
+
+    const doPhoto = () => {
+        getBase64(fileInput.current.files[0])
+        .then(photo => setPhotoPrint(photo))
+        .catch(_ => {
+            // tylim
+        })
+    }
 
     const handleCreate = () => {
         if (cat === '0') {
             showMessage({ text: 'Please, select cat!', type: 'danger' });
             return;
         }
-
-        // photo dejimas //
-        const file = fileInput.current.files[0];        // file(useRef) .files[0] - bet kokio tekstinio inputo reiksmes gavimas. Senas budas
-
-        if (file) {
-            getBase64(file)
-                .then(photo => {
-                    console.log(photo);
-                    const data = {
-                            title, 
-                            price: parseFloat(price), 
-                            inStock: inStock ? 1 : 0, 
-                            cat: parseInt(cat) ,
-                            photo
-                        }
-                    setCreateProduct(data);
-                    setTitle('');
-                    setPrice('');
-                    setInStock(false);
-                    setCat('0');
-                    });
-        } else {
-            const data = {
-                title, 
-                price: parseFloat(price), 
-                inStock: inStock ? 1 : 0, 
-                cat: parseInt(cat) ,
-                photo: null
-            }
+        const data = { 
+            title, 
+            price: parseFloat(price), 
+            inStock: inStock ? 1 : 0, 
+            cat: parseInt(cat),
+            photo: photoPrint
+        };
         setCreateProduct(data);
         setTitle('');
         setPrice('');
         setInStock(false);
         setCat('0');
-        }
+        // photoPrint(null);
     }
 
 
@@ -89,9 +78,12 @@ function Create() {
                 </div>
                 <div className="form-group">
                     <label>Photo</label>
-                    <input type="file" ref={fileInput}/>
+                    <input type="file" ref={fileInput} onChange={doPhoto}/>
                     <small className="form-text text-muted">Upload photo</small>
                 </div>
+                {
+                    photoPrint ? <div className='photo-bin'><img src={photoPrint} alt='chosen img'></img></div> : null
+                }
                 <button type="button" className="btn btn-outline-primary" onClick={handleCreate}>Create</button>
             </div>
         </div>

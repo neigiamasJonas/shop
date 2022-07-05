@@ -144,3 +144,14 @@ button.with-loader:disabled {
         display: inline-block;
     }
 }
+
+.photo-bin {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    margin: 20px 0px;
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
