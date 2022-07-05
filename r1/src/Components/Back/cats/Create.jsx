@@ -16,7 +16,7 @@ function Create() {
     return (
         <div className="card mt-4">
             <div className="card-header">
-                <h2>Create new Category</h2>
+                <h2>Create new Product</h2>
             </div>
             <div className="card-body">
                 <div className="form-group">

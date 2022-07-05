@@ -1,10 +1,9 @@
 nav.nav {
     background-color: aliceblue;
-    
 }
 
 body {
-    font-family: Roboto Slab;
+    font-family: 'Oswald', sans-serif;
 }
 
 .list-group-item {
@@ -17,6 +16,18 @@ body {
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            .box {
+                width: 15px;
+                height: 15px;
+                border: 1px solid coral;
+                margin: 0 10px;
+            }
+            .cat {
+                font-size: 75%;
+                color: skyblue;
+                text-decoration: underline;
+                margin: 0 0 0 40px;
+            }
         }
         .nest-content {
             display: flex;
@@ -24,66 +35,71 @@ body {
             justify-content: space-between;
             width: 100%;
             li {
-                min-width: 100px;
                 background-color: aliceblue;
-                color: black;
+                color: pink;
             }
         }
-    .buttons {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-    }
-    b {
-        margin-right: 7px;
-    }
-    i {
-        margin-left: 7px;
-    }
+        .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        b {
+            margin-right: 7px;
+        }
+        i {
+            margin-left: 7px;
+        }
+        u {
+            margin-left: 7px;
+            color: skyblue;
+        }
     }
 }
 
-textarea {
-    width: 100%;
-}
-.form-group {
-    width: 100%;
-}
 .list-group-item {
     .item-front {
         display: flex;
         align-items: flex-start;
-        justify-content: space-between;
+        justify-content: center;
         flex-direction: column;
-        gap: 10px;
         width: 100%;
         .content {
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
+        .form-group {
+            width: 100%;
+        }
+        textarea {
+            width: 100%;
+        }
         .nest-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
             li {
-                min-width: 100px;
                 background-color: aliceblue;
-                color: black;
+                color: pink;
             }
         }
-    .buttons {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-    }
-    b {
-        margin-right: 7px;
-    }
-    i {
-        margin-left: 7px;
-    }
+        .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        b {
+            margin-right: 7px;
+        }
+        i {
+            margin-left: 7px;
+        }
+        u {
+            margin-left: 7px;
+            color: skyblue;
+        }
     }
 }
 
@@ -92,8 +108,7 @@ textarea {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-
-.show_message {
+.show-message {
     display: flex;
     position: absolute;
     bottom: 50px;

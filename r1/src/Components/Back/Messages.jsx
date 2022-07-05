@@ -10,7 +10,7 @@ function Messages() {
 
     return (
         <>
-        <div className="show_message">
+        <div className="show-message">
         {
             messages.map(msg => (
                 
