@@ -33,7 +33,7 @@ function Create() {
                 <div className="form-group">
                     <label>Title</label>
                     <input type="text" className="form-control" onChange={e => setTitle(e.target.value)} value={title} />
-                    <small className="form-text text-muted">Enter your Cat name here.</small>
+                    <small className="form-text text-muted">Enter your Product name here.</small>
                 </div>
                 <div className="form-group">
                     <label>Price</label>
@@ -42,7 +42,7 @@ function Create() {
                 </div>
                 <div className="form-group form-check">
                     <input type="checkbox" className="form-check-input" id="in--stock" checked={inStock} onChange={() => setInStock(i => !i)} />
-                    <label className="form-check-label" htmlFor="in--stock">Check me out</label>
+                    <label className="form-check-label" htmlFor="in--stock">Check me out if In Stock</label>
                 </div>
                 <div className="form-group">
                     <label>Categories</label>
