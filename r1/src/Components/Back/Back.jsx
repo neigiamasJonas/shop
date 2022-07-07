@@ -6,6 +6,7 @@ import CatsCrud from "./cats/Crud";
 import Nav from "./Nav";
 import ProductsCrud from "./products/Crud";
 import { v4 as uuidv4 } from 'uuid';
+import {authConfig} from '../../Functions/auth';
 
 function Back( {show}) {
 
@@ -44,14 +45,14 @@ function Back( {show}) {
 
     // READ CAT + PRODUCTS //
     useEffect(() => {
-        axios.get('http://localhost:3006/admin/cats')
+        axios.get('http://localhost:3006/admin/cats', authConfig())
         .then(res => {
             setCats(res.data)
         })
     }, [lastUpdate]);
 
     useEffect(() => {
-        axios.get('http://localhost:3006/admin/products')
+        axios.get('http://localhost:3006/admin/products', authConfig())
         .then(res => {
             setProducts(res.data)
         });
@@ -62,7 +63,7 @@ function Back( {show}) {
     useEffect(() => {
         if (null === createCat) return;
 
-        axios.post('http://localhost:3006/admin/cats', createCat)
+        axios.post('http://localhost:3006/admin/cats', createCat, authConfig())
         .then(res => {
             showMessage(res.data.msg);
             setLastUpdate(Date.now());
@@ -75,7 +76,7 @@ function Back( {show}) {
 
     useEffect(() => {
         if (null === createProduct) return;
-        axios.post('http://localhost:3006/admin/products', createProduct)
+        axios.post('http://localhost:3006/admin/products', createProduct, authConfig())
             .then(res => {
                 showMessage(res.data.msg);
                 setLastUpdate(Date.now());
@@ -91,7 +92,7 @@ function Back( {show}) {
     useEffect(() => {
         if (null === deleteCat) return;
 
-        axios.delete('http://localhost:3006/admin/cats/' + deleteCat.id)
+        axios.delete('http://localhost:3006/admin/cats/' + deleteCat.id, authConfig())
         .then(res => {
             showMessage(res.data.msg);
             setLastUpdate(Date.now());
@@ -104,7 +105,7 @@ function Back( {show}) {
 
     useEffect(() => {
         if (null === deleteProduct) return;
-        axios.delete('http://localhost:3006/admin/products/' + deleteProduct.id)
+        axios.delete('http://localhost:3006/admin/products/' + deleteProduct.id, authConfig())
             .then(res => {
                 showMessage(res.data.msg);
                 setLastUpdate(Date.now());
@@ -118,7 +119,7 @@ function Back( {show}) {
     useEffect(() => {
         if (null === deletePhoto) return;
 
-        axios.delete('http://localhost:3006/admin/photos/' + deletePhoto.id)
+        axios.delete('http://localhost:3006/admin/photos/' + deletePhoto.id, authConfig())
         .then(res => {
             showMessage(res.data.msg);
             // setLastUpdate(Date.now());
@@ -133,7 +134,7 @@ function Back( {show}) {
     // EDIT CAT + PRODUCTS //
     useEffect(() => {
         if (null === editCat) return;
-        axios.put('http://localhost:3006/admin/cats/' + editCat.id, editCat)
+        axios.put('http://localhost:3006/admin/cats/' + editCat.id, editCat, authConfig())
             .then(res => {
                 showMessage(res.data.msg);
                 setLastUpdate(Date.now());
@@ -145,7 +146,7 @@ function Back( {show}) {
 
     useEffect(() => {
         if (null === editProduct) return;
-        axios.put('http://localhost:3006/admin/products/' + editProduct.id, editProduct)
+        axios.put('http://localhost:3006/admin/products/' + editProduct.id, editProduct, authConfig())
             .then(res => {
                 showMessage(res.data.msg);
                 setLastUpdate(Date.now());
