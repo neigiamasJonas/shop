@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import BackContext from "../Back/BackContext";
+import FrontContext from "./FrontContext";
 import Line from "./Line";
 
 
 function List() {
 
-    const {products} = useContext(BackContext);
+    const {products} = useContext(FrontContext);
 
     return (
         <div className="card mt-4">
