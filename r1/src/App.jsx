@@ -20,12 +20,12 @@ function App() {
       <BrowserRouter>
   
           <Routes>
-              <Route path="/" element={<Front></Front>}></Route>
+              <Route path="/" element={<RequireAuth role="user"><Front/></RequireAuth>} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/logout" element={<LogoutPage />} />
-              <Route path="/admin" element={<RequireAuth><Back show="admin"></Back></RequireAuth>}></Route>
-              <Route path="/admin/cats" element={<RequireAuth><Back show="cats"></Back></RequireAuth>}></Route>
-              <Route path="/admin/products" element={<RequireAuth><Back show="products"></Back></RequireAuth>}></Route>
+              <Route path="/admin" element={<RequireAuth role="admin"><Back show="admin"></Back></RequireAuth>}></Route>
+              <Route path="/admin/cats" element={<RequireAuth role="admin"><Back show="cats"></Back></RequireAuth>}></Route>
+              <Route path="/admin/products" element={<RequireAuth role="admin"><Back show="products"></Back></RequireAuth>}></Route>
           </Routes>
           
       </BrowserRouter>
@@ -37,11 +37,11 @@ export default App;
 
 
 
-function RequireAuth({ children }) {
+function RequireAuth({ children, role }) {
     const [view, setView] = useState(<h2>Please wait...</h2>);
   
     useEffect(() => {
-      axios.get('http://localhost:3006/login-check?role=admin', authConfig())   // prie login-check prirashau ?role=admin
+      axios.get('http://localhost:3006/login-check?role=' + role, authConfig())   // prie login-check prirashau ?role=admin
         .then(res => {
           if ('ok' === res.data.msg) {
             setView(children);
@@ -50,7 +50,7 @@ function RequireAuth({ children }) {
           }
         })
   
-    }, [children]);
+    }, [children, role]);
   
     return view;
   }
@@ -67,7 +67,7 @@ function RequireAuth({ children }) {
           console.log(res.data);
           if ('ok' === res.data.msg) {
             login(res.data.key);
-            navigate('/admin/', { replace: true });
+            navigate('/', { replace: true });
           }
         })
     }
@@ -90,7 +90,7 @@ function RequireAuth({ children }) {
   
 //   function PublicPage() {
 //     useEffect(() => {
-//       axios.get('http://localhost:3003/admin/hello', authConfig())
+//       axios.get('http://localhost:3006/admin/hello', authConfig())
 //         .then(res => {
 //           console.log(res)
 //         })
