@@ -150,20 +150,61 @@ console.log(`Alo - alo, Baločka Jonas klauso - ${port}`);
 //////////////////////////////////////////////
 ///////////////  FRONT SHOP  /////////////////
 
-// GET PRODUCTS //
+// GET PRODUCTS //    // pakeistas del filtro // ir adinau c.id AS cid //
 app.get("/products", (req, res) => {
-  const sql = `
-  SELECT p.id, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
-  FROM products AS p
-  LEFT JOIN cats AS c
-  ON c.id = p.cats_id
-  ORDER BY title
-  `;
-  con.query(sql, (err, result) => {
+  let sql;
+  let requests;
+  // console.log(req.query['cat-id']);
+  if (!req.query['cat-id'] && !req.query['s']) {
+      sql = `
+      SELECT p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
+      FROM products AS p
+      LEFT JOIN cats AS c
+      ON c.id = p.cats_id
+      ORDER BY title
+      `;
+      requests = [];
+  } else if (req.query['cat-id']){
+      sql = `
+      SELECT p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
+      FROM products AS p
+      LEFT JOIN cats AS c
+      ON c.id = p.cats_id
+      WHERE p.cats_id = ?
+      ORDER BY title
+      `;
+      requests = [req.query['cat-id']];
+  } else {
+      sql = `
+      SELECT p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
+      FROM products AS p
+      LEFT JOIN cats AS c
+      ON c.id = p.cats_id
+      WHERE p.title LIKE ?
+      ORDER BY title
+      `;
+      requests = ['%' + req.query['s'] + '%'];
+  }
+  con.query(sql, requests, (err, result) => {
       if (err) throw err;
       res.send(result);
   });
 });
+
+// // GET PRODUCTS BE FILTRO //
+// app.get("/products", (req, res) => {
+//   const sql = `
+//   SELECT p.id, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
+//   FROM products AS p
+//   LEFT JOIN cats AS c
+//   ON c.id = p.cats_id
+//   ORDER BY title
+//   `;
+//   con.query(sql, (err, result) => {
+//       if (err) throw err;
+//       res.send(result);
+//   });
+// });
 
 // GET CATS ??
 app.get("/cats", (req, res) => {
