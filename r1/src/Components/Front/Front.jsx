@@ -26,7 +26,8 @@ function Front() {
         setFilter(parseInt(cid));
     }
 
-    // GET PRODUCTS SU FILTER // + search
+
+    // // GET PRODUCTS SU FILTER // + search + commentu masyvas
     useEffect(() => {
         let query;
         if (filter === 0 && !search) {
@@ -37,18 +38,67 @@ function Front() {
             query = '?s=' + search
         }
 
-
         axios.get('http://localhost:3006/products' + query, authConfig())
-            .then(res => setProducts(res.data.map((p, i) => ({...p, row:i}))));
+            .then(res => {
+                const products = new Map();
+                res.data.forEach(p => {
+                    let comment;
+                    if (null === p.com) {
+                        comment = null
+                    } else {
+                        comment = {id: p.com_id, com: p.com};
+                    }
+                    
 
-    }, [filter, search, lastUpdate]);   // kai filtras pasikeicia, axios kreipiasi i produktus, plius lastupdate del comments
 
-    // // Get Products SENAS //
+                    if (products.has(p.id)) {
+                        const pr = products.get(p.id);
+                        if (comment) {
+                            pr.com.push(comment);
+                        }
+                        
+                    } else {
+                        products.set(p.id, {...p});
+                        const pr = products.get(p.id);
+                        pr.com = [];
+                        delete pr.com_id;
+                        if (comment) {
+                            pr.com.push(comment);
+                        }
+                    }
+                });
+                // console.log([...products].map(e => e[1]));
+                setProducts([...products].map(e => e[1]).map((p, i) => ({ ...p, row: i })));
+            })
+
+    }, [filter, search, lastUpdate]);
+
+
+
+
+    // // GET PRODUCTS SU FILTER // + search
     // useEffect(() => {
-    //     axios.get('http://localhost:3006/products', authConfig())
-    //     .then(res => setProducts(res.data.map((p, i) => ({...p, row:i}))));
+    //     let query;
+    //     if (filter === 0 && !search) {
+    //         query = '';
+    //     } else if (filter) {
+    //         query = '?cat-id=' + filter
+    //     } else if (search) {
+    //         query = '?s=' + search
+    //     }
+
+
+    //     axios.get('http://localhost:3006/products' + query, authConfig())
+    //         .then(res => setProducts(res.data.map((p, i) => ({...p, row:i}))));
+
+    // }, [filter, search, lastUpdate]);   // kai filtras pasikeicia, axios kreipiasi i produktus, plius lastupdate del comments
+
+    // // // Get Products SENAS //
+    // // useEffect(() => {
+    // //     axios.get('http://localhost:3006/products', authConfig())
+    // //     .then(res => setProducts(res.data.map((p, i) => ({...p, row:i}))));
         
-    // }, []);
+    // // }, []);
     
 
     // Get Cats

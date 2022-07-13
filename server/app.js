@@ -151,29 +151,35 @@ app.get("/products", (req, res) => {
   // console.log(req.query['cat-id']);
   if (!req.query['cat-id'] && !req.query['s']) {
       sql = `
-      SELECT p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
+      SELECT com.id AS com_id, com, p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
       FROM products AS p
       LEFT JOIN cats AS c
       ON c.id = p.cats_id
+      LEFT JOIN comments AS com
+      ON p.id = com.product_id
       ORDER BY title
       `;
       requests = [];
   } else if (req.query['cat-id']){
       sql = `
-      SELECT p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
+      SELECT com.id AS com_id, com, p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
       FROM products AS p
       LEFT JOIN cats AS c
       ON c.id = p.cats_id
+      LEFT JOIN comments AS com
+      ON p.id = com.product_id
       WHERE p.cats_id = ?
       ORDER BY title
       `;
       requests = [req.query['cat-id']];
   } else {
       sql = `
-      SELECT p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
+      SELECT com.id AS com_id, com, p.id, c.id AS cid, price, p.title, c.title AS cat, in_stock, last_update AS lu, photo
       FROM products AS p
       LEFT JOIN cats AS c
       ON c.id = p.cats_id
+      LEFT JOIN comments AS com
+      ON p.id = com.product_id
       WHERE p.title LIKE ?
       ORDER BY title
       `;
