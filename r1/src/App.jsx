@@ -26,6 +26,7 @@ function App() {
               <Route path="/admin" element={<RequireAuth role="admin"><Back show="admin"></Back></RequireAuth>}></Route>
               <Route path="/admin/cats" element={<RequireAuth role="admin"><Back show="cats"></Back></RequireAuth>}></Route>
               <Route path="/admin/products" element={<RequireAuth role="admin"><Back show="products"></Back></RequireAuth>}></Route>
+              <Route path="/admin/comments" element={<RequireAuth role="admin"><Back show="com"></Back></RequireAuth>}></Route>
           </Routes>
           
       </BrowserRouter>

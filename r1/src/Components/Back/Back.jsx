@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import BackContext from "./BackContext";
 import CatsCrud from "./cats/Crud";
+import ComCrud from "./Com/Crud";
 import Nav from "./Nav";
 import ProductsCrud from "./products/Crud";
 import { v4 as uuidv4 } from 'uuid';
@@ -41,6 +42,10 @@ function Back( {show}) {
         }, 5000);
 
     }
+
+    // comments //
+    const [comments, setComments] = useState(null);
+    const [deleteCom, setDeleteCom] = useState(null);
 
 
     // READ CAT + PRODUCTS //
@@ -157,6 +162,31 @@ function Back( {show}) {
     }, [editProduct]);
 
 
+
+    // read comments // 
+    useEffect(() => {
+        axios.get('http://localhost:3006/admin/comments', authConfig())
+        .then(res => {
+            setComments(res.data)
+        })
+    }, [lastUpdate]);
+
+    // delete comment //
+    useEffect(() => {
+        if (null === deleteCom) return;
+
+        axios.delete('http://localhost:3006/admin/comments/' + deleteCom.id, authConfig())
+        .then(res => {
+            showMessage(res.data.msg);
+            setLastUpdate(Date.now());
+        })
+        .catch(error => {
+            showMessage({ text: error.message, type: 'danger' });
+        })
+
+    }, [deleteCom]);
+
+
     return (
         <BackContext.Provider value={
             {
@@ -174,7 +204,9 @@ function Back( {show}) {
                 setEditProduct,
                 setModalProduct,
                 modalProduct,
-                setDeletePhoto
+                setDeletePhoto,
+                setDeleteCom,
+                comments
             }
             }>
             {
@@ -185,6 +217,8 @@ function Back( {show}) {
                             <h1>ADMIN</h1>
                     </>
                 : show === 'cats' ? <CatsCrud/>
+
+                : show === 'com' ? <ComCrud/>
                     
                 : show === 'products' ? <ProductsCrud/>
                     
