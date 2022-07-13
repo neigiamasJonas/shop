@@ -141,12 +141,6 @@ app.post("/login", (req, res) => {
 
 
 
-app.listen(port, () => {
-
-console.log(`Alo - alo, Baločka Jonas klauso - ${port}`);
-});
-
-
 //////////////////////////////////////////////
 ///////////////  FRONT SHOP  /////////////////
 
@@ -348,3 +342,25 @@ app.delete("/admin/photos/:id", (req, res) => {
       res.send({ result, msg: { text: 'Photo removed', type: 'success' } });
   });
 });
+
+
+// Comments
+app.post("/comments", (req, res) => {
+  const sql = `
+  INSERT INTO comments
+  (com, product_id)
+  VALUES (?, ?)
+  `;
+  con.query(sql, [req.body.com, req.body.product_id, ], (err, result) => {
+      if (err) throw err;
+      res.send({ result });
+  });
+});
+
+
+
+app.listen(port, () => {
+
+  console.log(`Alo - alo, Baločka Jonas klauso - ${port}`);
+  });
+  

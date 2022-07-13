@@ -9,13 +9,17 @@ import SortFilter from "./SortFilter";
 
 function Front() {
 
+    const [lastUpdate, setLastUpdate] = useState(Date.now());
+
     const [products, setProducts] = useState(null);
     const [cats, setCats] = useState(null);
 
-    const [cat, setCat] = useState(0);  // paimtas is sort filter
-    const [search, setSearch] = useState('')
+    const [cat, setCat] = useState(0);          // paimtas is sort filter
+    const [search, setSearch] = useState('')    // search'as
 
-    const [filter, setFilter] = useState(0);        // allcats <option value=0> SortFilter componente //
+    const [filter, setFilter] = useState(0);    // allcats <option value=0> SortFilter componente //
+
+    const [addCom, setAddcom] = useState(null);
    
     const doFilter = cid => {
         setCat(cid);
@@ -37,7 +41,7 @@ function Front() {
         axios.get('http://localhost:3006/products' + query, authConfig())
             .then(res => setProducts(res.data.map((p, i) => ({...p, row:i}))));
 
-    }, [filter, search]);   // kai filtras pasikeicia, axios kreipiasi i produktus
+    }, [filter, search, lastUpdate]);   // kai filtras pasikeicia, axios kreipiasi i produktus, plius lastupdate del comments
 
     // // Get Products SENAS //
     // useEffect(() => {
@@ -53,6 +57,16 @@ function Front() {
             .then(res => setCats(res.data));
     }, []);
 
+
+    // Create comment
+    useEffect(() => {
+        if (null === addCom) return;
+        axios.post('http://localhost:3006/comments', addCom, authConfig())
+            .then(_ => {
+                setLastUpdate(Date.now());
+            })
+    }, [addCom]);
+
     return(
         <FrontContext.Provider value={{
             products,
@@ -62,7 +76,8 @@ function Front() {
             cat,
             setCat,
             doFilter,
-            setSearch
+            setSearch,
+            setAddcom
 
         }}>
             <Nav/>

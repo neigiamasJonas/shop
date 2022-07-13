@@ -55,6 +55,19 @@ body {
             margin-left: 7px;
             color: skyblue;
         }
+        &.front{
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+            .comments {
+                margin: 10px 0;
+                padding: 10px 10px;
+                border: 1px solid black;
+                border-radius: 5px;
+                width: 100%;
+            }
+        }
     }
 }
 
