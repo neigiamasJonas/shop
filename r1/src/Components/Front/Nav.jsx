@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 function Nav() {
 
@@ -10,8 +10,10 @@ function Nav() {
                 <div className="row">
                     <div className="col12">
                         <nav className="nav">
-                            Welcome
+                            <div className="nav-link">Welcome</div>
+                            <Link className="nav-link" to="/logout">Logout</Link>
                         </nav>
+                        
                     </div>
                 </div>
             </div>

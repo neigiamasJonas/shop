@@ -33,7 +33,7 @@ function Nav() {
                                     color: 'crimson'
                                 } : null
                                 }>Comments</NavLink>
-                                <Link to="/logout">Logout</Link>
+                            <Link className="nav-link" to="/logout">Logout</Link>
                         </nav>
                     </div>
                 </div>

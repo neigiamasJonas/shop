@@ -214,7 +214,7 @@ function Back( {show}) {
                     // ADMIN //
                     <>
                         <Nav/>
-                            <h1>ADMIN</h1>
+                            <h3>Admin page</h3>
                     </>
                 : show === 'cats' ? <CatsCrud/>
 
